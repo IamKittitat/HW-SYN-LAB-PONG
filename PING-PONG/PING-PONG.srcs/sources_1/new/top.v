@@ -32,22 +32,20 @@ module top(
     wire sp_enter;
     inputControl(clk, clk50, PS2Clk, PS2Data, de_keyboard1,de_keyboard2,sp_enter, tx);
 
-    // ball position
+    // Ball position  --------------------------------------------------
     reg ball_inX, ball_inY;
     wire [9:0]ballX;
     wire [9:0]ballY;
     
-    // player 1 position 
+    // Player position --------------------------------------------------
     wire [9:0]posX1;
     wire [8:0]posY1;
-    
-    // player 2 position 
     wire [9:0]posX2;
     wire [8:0]posY2;
     
     wire BouncingObject;
     
-    // score
+    // Score --------------------------------------------------
     wire [6:0]score1;
     wire [6:0]score2;
     wire [1:0]state;
@@ -57,7 +55,7 @@ module top(
     
     reg CollisionX1, CollisionX2, CollisionY1, CollisionY2;
   
-    // generate graphic and VGA
+    // Generate graphic and VGA --------------------------------------------------
     wire valid;
     wire [9:0]h_cnt;
     wire [9:0]v_cnt;
@@ -98,18 +96,17 @@ module top(
     Ball ball(clk, rst, state, serve, CollisionX1, CollisionX2, CollisionY1, CollisionY2, ballX, ballY, ballStatus);
     GameLogic GameLogic(clk, rst, ballStatus, sp_enter, state, score1, score2,serve);
 
-    // Display score on Seven segment
-    wire [3:0] num3; // From left to right
+    // Display score on Seven segment --------------------------------------------------
+    // num3, num2, num1, num0
+    wire [3:0] num3;
     wire [3:0] num2;
     wire [3:0] num1;
     wire [3:0] num0;
-    
-    // BCD
+
     ROM_BinaryToBCD bcdP1(num3,num2,score1,clk13);
     ROM_BinaryToBCD bcdP2(num1,num0,score2,clk13);
 
     wire an0,an1,an2,an3;
     assign an={an3,an2,an1,an0};
     quadSevenSeg q7seg(seg,dp,an0,an1,an2,an3,num0,num1,num2,num3,clk13);
-    
 endmodule
