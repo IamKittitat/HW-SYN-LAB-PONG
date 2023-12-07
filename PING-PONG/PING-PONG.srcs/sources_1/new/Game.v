@@ -12,7 +12,7 @@ input clk, rst;
 input [1:0] ballStatus;
 input enter;
 output reg [1:0] state;
-output reg [2:0] score1, score2;
+output reg [6:0] score1, score2;
 output reg serve;
 
 // score: 0-3
@@ -30,10 +30,8 @@ output reg serve;
 // done: Print Score and Player move to original point
 
 reg [1:0] nextState;
-reg [2:0] nextScore1, nextScore2;
+reg [6:0] nextScore1, nextScore2;
 reg nextServe;
-
-reg [1:0] next_mode;
 
 // serve
 // 0: player1 serve
@@ -42,8 +40,8 @@ reg [1:0] next_mode;
 always @(posedge clk) begin
     if(rst==1'b1) begin
         state <= `START;
-        score1 <= 2'd0;
-        score2 <= 2'd0;
+        score1 <= 7'd0;
+        score2 <= 7'd0;
         serve <= 1'b0;
     end
     else begin
@@ -58,8 +56,8 @@ always @(*) begin
     case(state) 
         `START: begin
             nextState = `SERVE;
-            nextScore1 = 3'd0;
-            nextScore2 = 3'd0;
+            nextScore1 = 7'd0;
+            nextScore2 = 7'd0;
             nextServe = 1'b0;
         end
         `SERVE: begin
@@ -83,7 +81,7 @@ always @(*) begin
             else if(ballStatus==`PLAYER1WIN) begin
                 nextScore1 = score1 + 1'b1;
                 nextServe = 1'b1;
-                if(nextScore1<3'd4) begin
+                if(nextScore1<7'd100) begin
                     nextState = `SERVE;
                 end
                 else begin
@@ -93,7 +91,7 @@ always @(*) begin
             else begin
                 nextScore2 = score2 + 1'b1;
                 nextServe = 1'b0;
-                if(nextScore2<3'd4) begin
+                if(nextScore2<7'd100) begin
                     nextState = `SERVE;
                 end
                 else begin

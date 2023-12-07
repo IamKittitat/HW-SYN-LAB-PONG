@@ -157,8 +157,8 @@ module top(
     wire BouncingObject;
     
     // score
-    wire [2:0]score1;
-    wire [2:0]score2;
+    wire [6:0]score1;
+    wire [6:0]score2;
     wire [1:0]state;
 
     wire serve;
@@ -212,6 +212,8 @@ module top(
     wire [3:0] num2;
     wire [3:0] num1;
     wire [3:0] num0;
+    
+    // BCD
     
     assign num0=score2;
     assign num1=1'b0;
