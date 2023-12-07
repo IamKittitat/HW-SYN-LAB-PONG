@@ -7,36 +7,8 @@ input wire PS2Clk,
 input wire PS2Data,
 output wire [1:0] de_keyboard1,
 output wire [1:0] de_keyboard2,
-output wire sp_enter,
-output wire tx
+output wire sp_enter
 );
-    // UART --------------------------------------------------  
-    wire tready;
-    wire ready;
-    wire tstart;
-    reg start=0;
-    wire[31:0] tbuf;
-    wire[ 7:0] tbus;
-      
-    uart_buf_con tx_con (
-        .clk    (clk),
-        .bcount (bcount),
-        .tbuf   (tbuf  ),  
-        .start  (start ), 
-        .ready  (ready ), 
-        .tstart (tstart),
-        .tready (tready),
-        .tbus   (tbus  )
-    );
-    
-    uart_tx get_tx (
-        .clk    (clk),
-        .start  (tstart),
-        .tbus   (tbus),
-        .tx     (tx),
-        .ready  (tready)
-    );
-    
     // PS2 receiver --------------------------------------------------
     reg  [15:0] keycodev=0;
     wire [15:0] keycode;
@@ -66,18 +38,8 @@ output wire tx
     
     always@(posedge clk)
         if (flag == 1'b1 && cn == 1'b1) begin
-            start <= 1'b1;
             keycodev <= keycode;
-        end else
-            start <= 1'b0;
-    
-    // binary to ASCII -------------------------------------------------------
-    bin2ascii #(
-        .NBYTES(2)
-    ) conv (
-        .I(keycodev),
-        .O(tbuf)
-    );
+        end
 
     // Turn keycode to signal ----------------------------------------------------------
     wire up, down, W, S, enter;
@@ -86,7 +48,7 @@ output wire tx
     wire [1:0] keyboard1 = {up, down};
     wire [1:0] keyboard2 = {W, S};
 
-   // debouncer and single pulser ---------------------------------------------------------
+   // Debouncer and Single pulser ---------------------------------------------------------
     wire [1:0] de_keyboard1;
     wire [1:0] de_keyboard2;
     wire sp_enter;

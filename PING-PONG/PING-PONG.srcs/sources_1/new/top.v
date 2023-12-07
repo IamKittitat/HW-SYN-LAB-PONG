@@ -4,7 +4,6 @@ module top(
     input clk,
     input PS2Data,
     input PS2Clk,
-    output tx,
     input rst,
     output hsync,
     output vsync,
@@ -30,7 +29,7 @@ module top(
     wire [1:0] de_keyboard1;
     wire [1:0] de_keyboard2;
     wire sp_enter;
-    inputControl(clk, clk50, PS2Clk, PS2Data, de_keyboard1,de_keyboard2,sp_enter, tx);
+    inputControl(clk, clk50, PS2Clk, PS2Data, de_keyboard1,de_keyboard2,sp_enter);
 
     // Ball position  --------------------------------------------------
     reg ball_inX, ball_inY;
