@@ -8,8 +8,8 @@
 `define PLAYER1WIN 2'b01
 `define PLAYER2WIN 2'b10
 
-module GameLogic(clk, rst, ballStatus, enter, state, score1, score2, serve);
-    input clk, rst;
+module GameLogic(clk, reset, ballStatus, enter, state, score1, score2, serve);
+    input clk, reset;
     input [1:0] ballStatus;
     input enter;
     output reg [1:0] state;
@@ -22,7 +22,7 @@ module GameLogic(clk, rst, ballStatus, enter, state, score1, score2, serve);
     
     // reset
     always @(posedge clk) begin
-        if(rst==1'b1) begin
+        if(reset==1'b1) begin
             state <= `START;
             score1 <= 7'd0;
             score2 <= 7'd0;

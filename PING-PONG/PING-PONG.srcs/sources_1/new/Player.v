@@ -3,8 +3,8 @@
 `define PLAY 2'b10
 `define DONE 2'b11
 
-module Player(clk, rst, state, keyboard, player, posX, posY);
-    input clk, rst, player;
+module Player(clk, reset, state, keyboard, player, posX, posY);
+    input clk, reset, player;
     input [1:0] state;
     input [1:0] keyboard;
     output wire [9:0] posX;
@@ -16,7 +16,7 @@ module Player(clk, rst, state, keyboard, player, posX, posY);
     assign posX = (player == 1'b1) ? 10'd614: 9'd0;
     
     always @(posedge clk) begin
-        if(rst==1'b1) begin
+        if(reset==1'b1) begin
             posY <= 9'd232;
             counter <= 19'd0;
         end
