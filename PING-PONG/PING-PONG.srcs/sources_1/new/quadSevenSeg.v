@@ -21,7 +21,7 @@ module quadSevenSeg(
     assign seg=segments;
     
     hexTo7Segment segDecode(segments,hexIn);
-    assign dp=0; // dot point corresponse with activated an
+    assign dp=1; // dot point corresponse with activated an
     assign {an3,an2,an1,an0}=~dispEn;
 
     // state transition every clock

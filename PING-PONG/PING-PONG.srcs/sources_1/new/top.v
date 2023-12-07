@@ -214,11 +214,8 @@ module top(
     wire [3:0] num0;
     
     // BCD
-    
-    assign num0=score2;
-    assign num1=1'b0;
-    assign num2=score1;
-    assign num3=1'b0;
+    ROM_BinaryToBCD bcdP1(num3,num2,score1,clk13);
+    ROM_BinaryToBCD bcdP2(num1,num0,score2,clk13);
 
     wire an0,an1,an2,an3;
     assign an={an3,an2,an1,an0};
