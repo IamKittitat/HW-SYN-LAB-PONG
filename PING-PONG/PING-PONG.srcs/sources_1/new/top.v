@@ -119,8 +119,8 @@ module top(
     // END OF recieve INPUT ---------------------------------------------------------------------
 
     // Turn keycode to signal ----------------------------------------------------------
-    wire up, down, W, S, one, two, three, four, enter;
-    gen_keyboard gk(clk, flag, keycode, W, S, up, down, one, two, three, four, enter);
+    wire up, down, W, S, enter;
+    gen_keyboard gk(clk, flag, keycode, W, S, up, down, enter);
     
     wire [1:0] keyboard1 = {up, down};
     wire [1:0] keyboard2 = {W, S};
@@ -137,20 +137,7 @@ module top(
     debounce d3(clk,keyboard2[0], de_keyboard2[0]);
     debounce d4(clk, enter, de_enter);
     onepulse o4(clk, de_enter, one_enter);
-    
-    wire de_one, de_two, de_three, de_four;
-    debounce d11(clk, one, de_one);
-    debounce d12(clk, two, de_two);
-    debounce d13(clk, three, de_three);
-    debounce d14(clk, four, de_four);
-    
-    wire one_one, one_two, one_three, one_four;
-    wire [3:0] change = {one_one, one_two, one_three, one_four};
-    
-    onepulse o11(clk, de_one, one_one);
-    onepulse o12(clk, de_two, one_two);
-    onepulse o13(clk, de_three, one_three);
-    onepulse o14(clk, de_four, one_four);
+
     // End of Turn keycode to signal ----------------------------------------------------------
    
    
@@ -166,9 +153,6 @@ module top(
     // player 2 position 
     wire [9:0]posX2;
     wire [8:0]posY2;
-   
-   // game mode
-    wire [1:0] mode;
     
     wire BouncingObject;
     
@@ -197,8 +181,8 @@ module top(
            BouncingObject
        );
     
-    Player player1(clk, rst, state, mode, de_keyboard2, ballY, 1'b0, posX1, posY1);
-    Player player2(clk, rst, state, mode, de_keyboard1, ballY, 1'b1, posX2, posY2);
+    Player player1(clk, rst, state, de_keyboard2, ballY, 1'b0, posX1, posY1);
+    Player player2(clk, rst, state, de_keyboard1, ballY, 1'b1, posX2, posY2);
     
     always @(*) begin
         if(BouncingObject & (h_cnt==ballX) & (v_cnt==ballY+ 4)) CollisionX1=1'b1;
@@ -221,7 +205,7 @@ module top(
     end
     
     Ball ball(clk, rst, state, serve, CollisionX1, CollisionX2, CollisionY1, CollisionY2, ballX, ballY, ballStatus);
-    Game game(clk, rst, ballStatus, change, one_enter, state, score1, score2,serve, mode);
+    Game game(clk, rst, ballStatus, one_enter, state, score1, score2,serve);
 
     // Display score on Seven segment
     wire [3:0] num3; // From left to right

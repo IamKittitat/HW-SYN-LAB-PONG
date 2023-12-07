@@ -8,10 +8,6 @@ module gen_keyboard(
     output reg s,
     output reg up,
     output reg down,
-    output reg one,
-    output reg two,
-    output reg three,
-    output reg four,
     output reg enter
     );
 
@@ -25,14 +21,6 @@ module gen_keyboard(
                 up <= 0;
             end else if(keycode == 16'hf072) begin
                 down <= 0;
-            end else if(keycode == 16'hf016) begin
-                one <= 0;
-            end else if(keycode == 16'hf01E) begin
-                two <= 0;
-            end else if(keycode == 16'hf026) begin
-                three <= 0;
-            end else if(keycode == 16'hf025) begin
-                four <= 0;
             end else if(keycode == 16'hf05A) begin
                 enter <= 0;
             end else if(keycode[7:0] == 8'h1d) begin
@@ -43,14 +31,6 @@ module gen_keyboard(
                 up <= 1;
             end else if(keycode[7:0] == 8'h72) begin
                 down <= 1;
-            end else if(keycode[7:0] == 8'h16) begin
-                one <= 1;
-            end else if(keycode[7:0] == 8'h1E) begin
-                two <= 1;
-            end else if(keycode[7:0] == 8'h26) begin
-                three <= 1;
-            end else if(keycode[7:0] == 8'h25) begin
-                four <= 1;
             end else if(keycode[7:0] == 8'h5A) begin
                 enter <= 1;
             end

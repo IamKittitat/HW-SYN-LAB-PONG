@@ -7,21 +7,13 @@
 `define PLAYER1WIN 2'b01
 `define PLAYER2WIN 2'b10
 
-`define PP 2'b00
-`define PA 2'b01
-`define AP 2'b10
-`define AA 2'b11
-
-module Game(clk, rst, ballStatus, change, enter, state, score1, score2, serve, mode);
-
+module Game(clk, rst, ballStatus, enter, state, score1, score2, serve);
 input clk, rst;
 input [1:0] ballStatus;
-input [3:0] change;
 input enter;
 output reg [1:0] state;
 output reg [2:0] score1, score2;
 output reg serve;
-output reg [1:0] mode;
 
 // score: 0-3
 
@@ -53,14 +45,12 @@ always @(posedge clk) begin
         score1 <= 2'd0;
         score2 <= 2'd0;
         serve <= 1'b0;
-        mode <= `PP;
     end
     else begin
         state <= nextState;
         score1 <= nextScore1;
         score2 <= nextScore2;
         serve <= nextServe;
-        mode <= next_mode;
     end
 end
 
@@ -71,28 +61,11 @@ always @(*) begin
             nextScore1 = 3'd0;
             nextScore2 = 3'd0;
             nextServe = 1'b0;
-            next_mode = mode;
         end
         `SERVE: begin
             nextScore1 = score1;
             nextScore2 = score2;
             nextServe = serve;
-            if(change==4'b1000) begin
-                next_mode = `PP;
-            end
-            else if(change==4'b0100) begin
-                next_mode = `PA;
-            end
-            else if(change==4'b0010) begin
-                next_mode = `AP;
-            end
-            else if(change==4'b0001) begin
-                next_mode = `AA;
-            end
-            else begin
-                next_mode = mode;
-            end
-
             if(enter==1'b1) begin
                 nextState = `PLAY;
             end
@@ -104,7 +77,6 @@ always @(*) begin
             nextScore1 = score1;
             nextScore2 = score2;
             nextServe = serve;
-            next_mode = mode;
             if(ballStatus==`PLAYING) begin
                 nextState = `PLAY;
             end
@@ -133,7 +105,6 @@ always @(*) begin
             nextScore1 = score1;
             nextScore2 = score2;
             nextServe = 1'b0;
-            next_mode = mode;
             if(enter==1'b1) begin
                 nextState = `START;
             end
@@ -143,6 +114,4 @@ always @(*) begin
         end
     endcase
 end
-
-
 endmodule
