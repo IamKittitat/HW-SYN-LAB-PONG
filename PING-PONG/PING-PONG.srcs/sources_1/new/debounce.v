@@ -1,15 +1,15 @@
-module debounce(clk, pb, pb_debounced);
+module debounce(clk, ip, ip_debounced);
     input clk;
-    input pb;
-    output pb_debounced;
+    input ip;
+    output ip_debounced;
 
-    reg [4-1:0] DFF;
+    reg [3:0] debounced;
 
     always @(posedge clk) begin
-        DFF <= {DFF[2:0], pb};
+        debounced <= {debounced[2:0], ip};
     end
 
-    assign pb_debounced = &DFF;
+    assign ip_debounced = &debounced;
 
 endmodule
 

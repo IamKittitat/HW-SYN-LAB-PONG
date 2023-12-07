@@ -1,14 +1,14 @@
-module onepulse(clk, pb_debounced, pb_onepulse);
+module onepulse(clk, ip, ip_onepulse);
     input clk;
-    input pb_debounced;
-    output pb_onepulse;
+    input ip;
+    output ip_onepulse;
 
-    reg pb_debounced_delay;
-    reg pb_onepulse;
+    reg ip_debounced_delay;
+    reg ip_onepulse;
 
     always @(posedge clk) begin
-        pb_onepulse <= pb_debounced & (!pb_debounced_delay);
-        pb_debounced_delay <= pb_debounced;
+        ip_onepulse <= ip & (!ip_debounced_delay);
+        ip_debounced_delay <= ip;
     end
 
 endmodule
