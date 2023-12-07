@@ -7,7 +7,7 @@ input [6:0] addr,
 input clk 
 ); (* synthesis, rom_block = "ROM_CELL XYZ01" *)
 
-    reg [7:0] rom[31:0];
+    reg [7:0] rom[100:0];
     initial
     begin
         $readmemb("rom.data", rom);

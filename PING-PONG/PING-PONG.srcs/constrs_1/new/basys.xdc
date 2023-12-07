@@ -108,8 +108,8 @@ set_property IOSTANDARD LVCMOS33 [get_ports {an[3]}]
 
 
 ##Buttons
-set_property PACKAGE_PIN U18 [get_ports rst]
-set_property IOSTANDARD LVCMOS33 [get_ports rst]
+set_property PACKAGE_PIN U18 [get_ports reset]
+set_property IOSTANDARD LVCMOS33 [get_ports reset]
 #set_property PACKAGE_PIN T18 [get_ports btnU]
 #set_property IOSTANDARD LVCMOS33 [get_ports btnU]
 #set_property PACKAGE_PIN W19 [get_ports btnL]
@@ -272,8 +272,8 @@ set_property IOSTANDARD LVCMOS33 [get_ports LED_Debug[3]]
 
 ##USB-RS232 Interface
 #set_property IOSTANDARD LVCMOS33 [get_ports RsRx]
-set_property PACKAGE_PIN A18 [get_ports tx]						
-	set_property IOSTANDARD LVCMOS33 [get_ports tx]
+#set_property PACKAGE_PIN A18 [get_ports tx]						
+#	set_property IOSTANDARD LVCMOS33 [get_ports tx]
 
 
 ##USB HID (PS/2)
