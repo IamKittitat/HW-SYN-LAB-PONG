@@ -5,8 +5,8 @@
 `define DONE 2'b11
 
 // ball start position
-`define ORIGINX 10'd304
-`define ORIGINY 10'd224
+`define ORIGINX 10'd315
+`define ORIGINY 10'd235
 
 // ball status
 `define PLAYING 2'b00

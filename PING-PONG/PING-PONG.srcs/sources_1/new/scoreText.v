@@ -44,7 +44,7 @@ module pong_text(
     ROM_BinaryToBCD bcdP1(num3,num2,score1,clk);
     ROM_BinaryToBCD bcdP2(num1,num0,score2,clk);
    
-   assign score_on_1 = (y >= 32) && (y < 64) && (x < 9'd145);
+   assign score_on_1 = (y >= 32) && (y < 64) && (x < 9'd143);
    assign score_on_2 = (y >= 32) && (y < 64) && (x > 9'd2500);
 
    always @* begin 
@@ -72,9 +72,9 @@ module pong_text(
         bit_addr = x[3:1];
         
         if(ascii_bit)
-            text_rgb = 12'hF00; // red
+            text_rgb = 12'hfff;
         else
-            text_rgb = 12'h000; // background 
+            text_rgb = (x < 320) ? 12'hF00 : 12'h0C0; // background 
     end
     
     assign text_on = (y >= 32) && (y < 64);

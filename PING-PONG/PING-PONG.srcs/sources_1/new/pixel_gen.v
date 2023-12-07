@@ -1,12 +1,3 @@
-`define START 2'b00
-`define SERVE 2'b01
-`define PLAY 2'b10
-`define DONE 2'b11
-
-`define PLAYING 2'b00
-`define PLAYER1WIN 2'b01
-`define PLAYER2WIN 2'b10
-
 module pixel_gen(
    input [9:0] h_cnt,
    input clk,
@@ -50,6 +41,8 @@ module pixel_gen(
 
     wire ball = ball_inX & ball_inY;
     
+    wire [11:0] bg_rgb = (h_cnt < 320) ? 12'hf00 : 12'h0c0;
+    
     always @(*) begin
         if(valid && BouncingObject)
             {vgaRed, vgaGreen, vgaBlue} = 12'hfff;
@@ -57,8 +50,10 @@ module pixel_gen(
             {vgaRed, vgaGreen, vgaBlue} = 12'hfff;
         else if(valid && text_on)
             {vgaRed, vgaGreen, vgaBlue}= text_rgb;
-        else 
-            {vgaRed, vgaGreen, vgaBlue} = 12'h0;
+        else if(valid)
+            {vgaRed, vgaGreen, vgaBlue} = bg_rgb;
+        else
+            {vgaRed, vgaGreen, vgaBlue} = 12'hfff;
     end
     
 endmodule
