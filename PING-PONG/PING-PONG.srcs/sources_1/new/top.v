@@ -1,37 +1,16 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: Digilent Inc 
-// Engineer: Arthur Brown
-// 
-// Create Date: 07/27/2016 02:04:01 PM
-// Design Name: Basys3 Keyboard Demo
-// Module Name: top
-// Project Name: Keyboard
-// Target Devices: Basys3
-// Tool Versions: 2016.X
-// Description: 
-//     Receives input from USB-HID in the form of a PS/2, displays keyboard key presses and releases over USB-UART.
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-//     Known issue, when multiple buttons are pressed and one is released, the scan code of the one still held down is ometimes re-sent.
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module top(
-    input         clk,
-    input         PS2Data,
-    input         PS2Clk,
-    output        tx,
+    input clk,
+    input PS2Data,
+    input PS2Clk,
+    output tx,
     input rst,
     output hsync,
     output vsync,
     output [3:0] vgaRed,
     output [3:0] vgaGreen,
     output [3:0] vgaBlue,
-    
     output [6:0] seg,
     output dp,
     output [3:0] an
@@ -47,12 +26,12 @@ module top(
     wire clk13;
     clock_divisor clock_divisor1(clk1, clk,clk13);
     
-    // Recieve INPUT -------------------------------------------------------------------
+    // Receive INPUT -------------------------------------------------------------------
      // UART --------------------------------------------------  
-    wire       tready;
-    wire       ready;
-    wire       tstart;
-    reg        start=0;
+    wire tready;
+    wire ready;
+    wire tstart;
+    reg start=0;
     wire[31:0] tbuf;
     wire[ 7:0] tbus;
       
@@ -79,8 +58,8 @@ module top(
     reg  [15:0] keycodev=0;
     wire [15:0] keycode;
     reg  [ 2:0] bcount=0;
-    wire        flag;
-    reg         cn=0;
+    wire flag;
+    reg cn=0;
     
     PS2Receiver uut (
         .clk(clk50),
@@ -124,22 +103,21 @@ module top(
     
     wire [1:0] keyboard1 = {up, down};
     wire [1:0] keyboard2 = {W, S};
-   
+  
     wire [1:0] de_keyboard1;
     wire [1:0] de_keyboard2;
        
    // debouncer and one pulser ---------------------------------------------------------
-    wire one_enter;
+    wire sp_enter;
     wire de_enter;
     debounce d0(clk, keyboard1[1], de_keyboard1[1]);
     debounce d1(clk,keyboard1[0], de_keyboard1[0]);
     debounce d2(clk, keyboard2[1], de_keyboard2[1]);
     debounce d3(clk,keyboard2[0], de_keyboard2[0]);
     debounce d4(clk, enter, de_enter);
-    onepulse o4(clk, de_enter, one_enter);
+    singlepulser sp4(clk, de_enter, sp_enter);
 
     // End of Turn keycode to signal ----------------------------------------------------------
-   
    
     // ball position
     reg ball_inX, ball_inY;
@@ -205,7 +183,7 @@ module top(
     end
     
     Ball ball(clk, rst, state, serve, CollisionX1, CollisionX2, CollisionY1, CollisionY2, ballX, ballY, ballStatus);
-    GameLogic GameLogic(clk, rst, ballStatus, one_enter, state, score1, score2,serve);
+    GameLogic GameLogic(clk, rst, ballStatus, sp_enter, state, score1, score2,serve);
 
     // Display score on Seven segment
     wire [3:0] num3; // From left to right
