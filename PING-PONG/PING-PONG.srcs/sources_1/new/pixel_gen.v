@@ -41,18 +41,22 @@ module pixel_gen(
 
     wire ball = ball_inX & ball_inY;
     
-    wire [11:0] bg_rgb;//(h_cnt < 320) ? 12'hf00 : 12'h0c0;
-    ROM_Bg ROM_Bg(h_cnt, v_cnt, bg_rgb);
+     reg [11:0] bg_rgb = 12'h000;
+    //ROM_Bg ROM_Bg(h_cnt, v_cnt, bg_rgb);
     
     always @(*) begin
         if(valid && BouncingObject)
-            {vgaRed, vgaGreen, vgaBlue} = 12'hfff;
+            if(paddle1) {vgaRed, vgaGreen, vgaBlue} = ( h_cnt[0] == v_cnt[0] ) ? 12'hfcc: 12'hf0b;
+            else if (paddle2) {vgaRed, vgaGreen, vgaBlue} = ( h_cnt[0] == v_cnt[0] ) ? 12'hccf: 12'h01C;
+            else {vgaRed, vgaGreen, vgaBlue} = 	12'hfff;
         else if(valid && ball)
             {vgaRed, vgaGreen, vgaBlue} = 12'hfff;
         else if(valid && text_on)
             {vgaRed, vgaGreen, vgaBlue}= text_rgb;
-        else 
+        else if(valid)
             {vgaRed, vgaGreen, vgaBlue} = bg_rgb;
+        else
+            {vgaRed, vgaGreen, vgaBlue} = 12'hfff;
     end
     
 endmodule
