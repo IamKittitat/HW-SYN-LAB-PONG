@@ -181,8 +181,8 @@ module top(
            BouncingObject
        );
     
-    Player player1(clk, rst, state, de_keyboard2, ballY, 1'b0, posX1, posY1);
-    Player player2(clk, rst, state, de_keyboard1, ballY, 1'b1, posX2, posY2);
+    Player player1(clk, rst, state, de_keyboard2, 1'b0, posX1, posY1);
+    Player player2(clk, rst, state, de_keyboard1, 1'b1, posX2, posY2);
     
     always @(*) begin
         if(BouncingObject & (h_cnt==ballX) & (v_cnt==ballY+ 4)) CollisionX1=1'b1;
