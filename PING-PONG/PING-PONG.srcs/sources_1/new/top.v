@@ -205,7 +205,7 @@ module top(
     end
     
     Ball ball(clk, rst, state, serve, CollisionX1, CollisionX2, CollisionY1, CollisionY2, ballX, ballY, ballStatus);
-    Game game(clk, rst, ballStatus, one_enter, state, score1, score2,serve);
+    GameLogic GameLogic(clk, rst, ballStatus, one_enter, state, score1, score2,serve);
 
     // Display score on Seven segment
     wire [3:0] num3; // From left to right
