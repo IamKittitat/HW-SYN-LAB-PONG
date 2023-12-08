@@ -28,7 +28,7 @@ module pixel_gen(
     wire text_on;
     wire [11:0] text_rgb;
 
-    pong_text pong_text( clk, score1, score2, h_cnt, v_cnt, text_on, text_rgb);
+    scoreText score_text( clk, score1, score2, h_cnt, v_cnt, text_on, text_rgb);
     
     assign  BouncingObject = border | paddle1 | paddle2 ; // active if the border or paddle is redrawing itself
     always @(posedge clk)

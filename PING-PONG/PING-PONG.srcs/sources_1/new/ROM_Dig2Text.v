@@ -19,7 +19,7 @@
 // the MSB of the address. The 4-bit LSB is the row value.
 // *************************************************************
 
-module ascii_rom(
+module ROM_Dig2Text(
 	input clk, 
 	input wire [10:0] addr,
 	output reg [7:0] data

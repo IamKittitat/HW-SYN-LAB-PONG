@@ -10,7 +10,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module pong_text(
+module scoreText(
     input clk,
     input [6:0] score1, score2,
     input [9:0] x, y,
@@ -27,7 +27,7 @@ module pong_text(
     wire score_on;
     
    // instantiate ascii rom
-   ascii_rom ascii_unit(.clk(clk), .addr(rom_addr), .data(ascii_word));
+   ROM_Dig2Text rom_dig2text(.clk(clk), .addr(rom_addr), .data(ascii_word));
    
    // ---------------------------------------------------------------------------
    // score region
