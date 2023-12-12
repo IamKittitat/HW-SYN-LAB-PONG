@@ -56,7 +56,7 @@ module pixel_gen(
         else if(valid)
             {vgaRed, vgaGreen, vgaBlue} = bg_rgb;
         else
-            {vgaRed, vgaGreen, vgaBlue} = 12'hfff;
+            {vgaRed, vgaGreen, vgaBlue} = 12'h000;
     end
     
 endmodule
